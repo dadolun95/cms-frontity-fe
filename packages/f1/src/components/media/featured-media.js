@@ -34,8 +34,9 @@ const FeaturedMedia = ({ state, id }) => {
 export default connect(FeaturedMedia);
 
 const FeaturedContainer = styled.div`
-  margin-top: 2rem;
-  margin-bottom:2rem;  
+  margin-bottom: 2rem;  
+  position: relative;
+  z-index: 1;
 `;
 
 const StyledImage = styled(Image)`

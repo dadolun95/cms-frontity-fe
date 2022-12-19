@@ -1,6 +1,12 @@
 import React from "react";
 import { connect, styled } from "frontity";
+import {
+  AnchorLink
+} from "react-anchor-navigation";
+import Switch from "@frontity/components/switch";
 import Link from "../link";
+import GithubSvg from "../media/githubSvg";
+import LinkedinSvg from "../media/linkedinSvg";
 
 /**
  * Navigation Component
@@ -8,19 +14,29 @@ import Link from "../link";
  * It renders the navigation links
  */
 const Nav = ({ state }) => (
-  <NavContainer>
+  <NavContainer className="nav-container">
     {state.theme.menu.map(([name, link]) => {
       // Check if the link matched the current page url
-      const isCurrentPage = state.router.link === link;
       return (
         <NavItem key={name}>
-          {/* If link url is the current page, add `aria-current` for a11y */}
-          <Link link={link} aria-current={isCurrentPage ? "page" : undefined}>
-            {name}
-          </Link>
+            {/* If link url is the current page, add `aria-current` for a11y */}
+          <Switch>
+            <Link when={link.indexOf("#") === -1} aria-label={name} link={link}>
+              {name}
+            </Link>
+            <AnchorLink when={link.indexOf("#") !== -1} aria-label={name} href={link} activeClassName="active">
+              {name}
+            </AnchorLink>
+          </Switch>
         </NavItem>
       );
     })}
+    <Link className="widget-list-link" target="_blank" rel="nofollow noopener" aria-label="Github" link="https://github.com/dadolun95">
+      <GithubSvg />
+    </Link>
+    <Link className="widget-list-link" target="_blank" rel="nofollow noopener" aria-label="Linkedin" link="https://www.linkedin.com/in/davide-lunardon-b78813a1/">
+      <LinkedinSvg />
+    </Link>
   </NavContainer>
 );
 
@@ -31,12 +47,14 @@ const NavContainer = styled.nav`
   display: flex;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 0 24px;
+  padding: 10px 24px;
   margin: 0;
   overflow-x: auto;
-
   @media screen and (max-width: 768px) {
     display: none;
+  }
+  .widget-list-link {
+    margin-left: 20px;
   }
 `;
 
@@ -47,6 +65,7 @@ const NavItem = styled.div`
   font-size: 0.9em;
   box-sizing: border-box;
   flex-shrink: 0;
+  font-weight: bold;
 
   & > a {
     display: inline-block;

@@ -1,52 +1,38 @@
 import React from "react";
 import { connect, styled } from "frontity";
 import Link from "../link";
-
- 
-// simplest form (only email)
-
+import GithubSvg from "../media/githubSvg";
+import LinkedinSvg from "../media/linkedinSvg";
+import { Trans } from 'react-i18next';
 
 const Footer = ({ state }) => {
-  // const options = state.source.get("acf-options-page");
   return (
     <>
       <Container>
         <div className="row">
           <div className="col-12 col-lg-6 footer-widget widget-one">
-            <h6 className="widget-title">About the company</h6>
-            <p>Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Egestas quis ipsum suspendisse ultrices gravida. Sed adipiscing diam donec adipiscing tristique risus nec feugiat in. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Egestas quis ipsum suspendisse ultrices gravida.</p> 
-          </div>
-          <div className="col-12 col-md-4 col-lg-2 footer-widget widget-two">
-            <h6 className="widget-title">Company</h6>
-            <ul className="widget-list">
-              <li><Link className="widget-list-link" link="/about/">About us</Link></li>
-              <li><Link className="widget-list-link" link="/services/">Services</Link></li>
-              <li><Link className="widget-list-link" link="/jobs/">Career</Link></li>
-              <li><Link className="widget-list-link" link="/blog/">Blog</Link></li>
-              <li><Link className="widget-list-link" link="/contact/">Contact</Link></li>
+            <ul className="widget-list d-flex">
+              <li className="social-link">
+                <Link className="widget-list-link" target="_blank" rel="nofollow noopener" aria-label="Github" link="https://github.com/dadolun95">
+                    <GithubSvg />
+                </Link>
+              </li>
+              <li className="social-link">
+                <Link className="widget-list-link" target="_blank" rel="nofollow noopener" aria-label="Linkedin" link="https://www.linkedin.com/in/davide-lunardon-b78813a1/">
+                    <LinkedinSvg />
+                </Link>
+              </li>
             </ul>
           </div>
-          <div className="col-12 col-md-4 col-lg-2 footer-widget widget-three">
-            <h6 className="widget-title">Company</h6>
-            <ul className="widget-list">
-              <li><Link className="widget-list-link" link="/about/">About us</Link></li>
-              <li><Link className="widget-list-link" link="/services/">Services</Link></li>
-              <li><Link className="widget-list-link" link="/jobs/">Career</Link></li>
-              <li><Link className="widget-list-link" link="/blog/">Blog</Link></li>
-              <li><Link className="widget-list-link" link="/contact/">Contact</Link></li>
-            </ul>
-          </div>
-          <div className="col-12 col-md-4 col-lg-2 footer-widget widget-four">
-            <h6 className="widget-title">Connect</h6>
-            <ul className="widget-list">
-              <li><Link className="widget-list-link" target="_blank" rel="nofollow noopener" link="https://www.facebook.com/awsminnovations">Facebook</Link></li>
-              <li><Link className="widget-list-link" target="_blank" rel="nofollow noopener" link="https://twitter.com/awsmin">Twitter</Link></li>
-              <li><Link className="widget-list-link" target="_blank" rel="nofollow noopener" link="https://www.instagram.com/awsmin/">Instagram</Link></li>
-              <li><Link className="widget-list-link" target="_blank" rel="nofollow noopener" link="https://github.com/awsmin">Github</Link></li>
+          <div className="col-md-6 footer-widget widget-two">
+            <ul className="widget-list links">
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Who i am')}} link="/#chi-sono/"><Trans i18nKey="Who i am" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Work')}} link="/#lavoro"><Trans i18nKey="Work" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Blog')}} link="/blog"><Trans i18nKey="Blog" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Contacts')}} link="/#contatti"><Trans i18nKey="Contacts" /></Link></li>
             </ul>
           </div>
         </div>
-        
       </Container>
     </>
   );
@@ -55,34 +41,36 @@ const Footer = ({ state }) => {
 // Connect the Header component to get access to the `state` in it's `props`
 export default connect(Footer);
 
-const Container = styled.footer`   
+const Container = styled.footer`
   max-width:1200px;
   margin: 0 auto;
-  padding-top:4rem;
-  padding-bottom:4rem;
-  padding-right: 15px;
-  padding-left: 15px;
-  color:var(--white);
+  padding: 4rem 15px;
+  color: var(--white);
+  .social-link {
+    margin-right: 30px;
+  }
   .footer-widget {
-    margin-bottom:1rem;
-    .widget-title {
-      color:var(--white);
-      margin-bottom:1.2rem;
-    }
+    margin-bottom: 1rem;
     p {
-      font-size:1rem;
+      font-size: 1rem;
     }
     .widget-list {
-      list-style:none;
-      padding-left:0;
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      &.links {
+        flex-flow: row-reverse;
+      }
       li {
-        margin-bottom:0.5rem;
+        margin-bottom: 0.5rem;
+        padding-right: 20px;
         .widget-list-link {
-          text-decoration:none;
+          text-decoration: none;
           transition: all 0.3s ease;
-          color:var(--white);
+          color: var(--typography-secondary);
           &:hover {
-            color:var(--black);
+            color: var(--typography-action);
           }
         }
       }
@@ -91,7 +79,19 @@ const Container = styled.footer`
   .widget-one {
     p {
       @media (min-width: 992px) {
-        padding-right:8rem;
+        padding-right: 8rem;
+      }
+    }
+  }
+  .widget-two {
+      .widget-list.links {
+        @media (min-width: 768px) {
+          margin-left: auto;
+          flex-flow: row-reverse;
+        }
+        margin-left: 0px;
+        margin-right: auto;
+        flex-flow: row;
       }
     }
   }

@@ -11,17 +11,30 @@
     "npm": ">=6.0.0"
   },
   "scripts": {
-    "dev": "frontity dev",
+    "dev": "npx cross-env NODE_EXTRA_CA_CERTS=\"/home/dadolun/.warden/ssl/rootca/certs/ca.cert.pem\" frontity dev",
     "build": "frontity build",
-    "serve": "frontity serve"
+    "copymissingassets": "cp favicon.ico build/favicon.ico",
+    "serve": "frontity serve",
+    "postinstall": "patch-package"
   },
   "prettier": {},
   "dependencies": {
-    "frontity": "^1.17.2",
+    "@awsmin/f1": "./packages/f1",
     "@frontity/core": "^1.16.0",
-    "@frontity/wp-source": "^1.11.7",
-    "@frontity/tiny-router": "^1.4.4",
     "@frontity/html2react": "^1.7.0",
-    "@awsmin/f1": "./packages/f1"
+    "@frontity/tiny-router": "^1.4.4",
+    "@frontity/wp-source": "^1.11.7",
+    "frontity": "^1.17.2",
+    "i18next": "^22.4.5",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
+    "react": "^17.0.2",
+    "react-anchor-navigation": "^0.2.6",
+    "react-html-parser": "^2.0.2",
+    "react-i18next": "^12.1.1",
+    "react-player": "^2.10.1",
+    "react-typing-effect": "^2.0.5",
+    "swiper": "^6.8.4",
+    "webp-loader": "^0.6.0"
   }
 }

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@frontity/wp-source/src/libraries/handlers/postType.ts b/node_modules/@frontity/wp-source/src/libraries/handlers/postType.ts
+index 820208f..d81a2da 100644
+--- a/node_modules/@frontity/wp-source/src/libraries/handlers/postType.ts
++++ b/node_modules/@frontity/wp-source/src/libraries/handlers/postType.ts
+@@ -69,7 +69,7 @@ const postTypeHandler = ({
+     for (const endpoint of finalEndpoints) {
+       const response = await libraries.source.api.get({
+         endpoint,
+-        params: { slug, _embed: true, ...state.source.params },
++        params: { slug, _embed: true, acf_format: "standard", ...state.source.params },
+       });
+ 
+       const populated = await libraries.source.populate({

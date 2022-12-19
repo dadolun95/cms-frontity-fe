@@ -6,6 +6,7 @@ import List from "../list";
 const Page = ({ state, actions, libraries }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
+
   // Get the data of the post.
   const page = state.source[data.type][data.id];
 
@@ -59,7 +60,7 @@ const Content = styled.div`
   word-break: break-word;  
   
   * {
-    max-width: 1035px;
+    max-width: 1280px;
     width: 100%;
     margin:0 auto;
   }

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import Link from "@frontity/components/link";
+import { Trans } from 'react-i18next';
 
 /**
  * Pagination Component
@@ -20,11 +21,11 @@ const Pagination = ({ state, actions }) => {
   }, []);
 
   return (
-    <div>
+    <PaginationContainer>
       {/* If there's a next page, render this link */}
       {next && (
-        <Link link={next}>
-          <Text>← Older posts</Text>
+        <Link link={next} className="pagination-link">
+          <Text>← <Trans i18nKey="See previous" /></Text>
         </Link>
       )}
 
@@ -32,11 +33,11 @@ const Pagination = ({ state, actions }) => {
 
       {/* If there's a previous page, render this link */}
       {previous && (
-        <Link link={previous}>
-          <Text>Newer posts →</Text>
+        <Link link={previous} className="pagination-link">
+          <Text><Trans i18nKey="See next" /> →</Text>
         </Link>
       )}
-    </div>
+    </PaginationContainer>
   );
 };
 
@@ -50,3 +51,17 @@ const Text = styled.em`
   display: inline-block;
   margin-top: 16px;
 `;
+
+const PaginationContainer = styled.section`
+  .pagination-link {
+    color: var(--brand);
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+    &:hover {
+      color: var(--typography-action);
+    }
+  }
+`;
+
+

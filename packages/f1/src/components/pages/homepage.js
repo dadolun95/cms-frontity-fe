@@ -1,257 +1,278 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
-import Link from "../link";
 import List from "../list";
-//import Image from "@frontity/components/image";
+import HpIntro from "./homepage/intro";
+import HpWhoIAm from "./homepage/who-i-am";
+import HpWork from "./homepage/work";
+import HpBlog from "./homepage/blog";
+import HpContacts from "./homepage/contacts";
+import Square1 from '../media/background-square-1.png';
+import Square2 from '../media/background-square-2.png';
+import {
+    AnchorProvider,
+    AnchorSection
+} from "react-anchor-navigation";
+
+export function useHashFragment(offset = 0, trigger = true) {
+    useEffect(() => {
+        const scrollToHashElement = () => {
+            const { hash } = window.location;
+            const elementToScroll = document.getElementById(hash?.replace("#", ""));
+
+            if (!elementToScroll) return;
+
+            window.scrollTo({
+                top: elementToScroll.offsetTop - offset,
+                behavior: "smooth"
+            });
+        };
+
+        if (!trigger) return;
+
+        scrollToHashElement();
+        window.addEventListener("hashchange", scrollToHashElement);
+        return window.removeEventListener("hashchange", scrollToHashElement);
+    }, [trigger]);
+}
 
 const HomePage = ({ state, actions, libraries }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
+
   // Get the data of the post.
   const homepage = state.source[data.type][data.id];
 
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
-  //const BannerSlider = homepage.acf.banner_slider; 
- 
+  const introSectionContent = {
+      'message': homepage.acf["hp-intro-hello"],
+      'name': homepage.acf["hp-intro-name"],
+      'text': homepage.acf["hp-intro-text"],
+      'cta-text': homepage.acf["hp-intro-cta"],
+      'cta-email': "mailto:" + homepage.acf["hp-intro-cta-email"]
+  };
 
+  const whoIAmSectionContent = {
+    'title': homepage.acf["hp-0-title"],
+    'text': homepage.acf["hp-0-text"],
+    'photo': homepage.acf["hp-0-photo"],
+    'photo-alt': homepage.acf["hp-intro-name"]
+  };
+
+  const workSectionContent = {
+    'title': homepage.acf["hp-1-title"],
+    'tabs': [
+        {
+            'title': homepage.acf["hp-1-subtitle-0"],
+            'content': homepage.acf["hp-1-text-0"]
+        },
+        {
+            'title': homepage.acf["hp-1-subtitle-1"],
+            'content': homepage.acf["hp-1-text-1"]
+        },
+        {
+            'title': homepage.acf["hp-1-subtitle-2"],
+            'content': homepage.acf["hp-1-text-2"]
+        }
+    ]
+  };
+
+  const blogSectionContent = {
+    'title': homepage.acf["hp-2-title"],
+    'text': homepage.acf["hp-2-text"]
+  };
+
+  const contactsSectionContent = {
+    'title': homepage.acf["hp-3-title"],
+    'text': homepage.acf["hp-3-text"],
+    'cta-text': homepage.acf["hp-3-cta-text"],
+    'cta-email': "mailto:" + homepage.acf["hp-3-cta-email"]
+  };
+
+  /**
+   * Once the post has loaded in the DOM, prefetch both the
+   * home posts and the list component so if the user visits
+   * the home page, everything is ready and it loads instantly.
+   */
   useEffect(() => {
     actions.source.fetch("/");
     List.preload();
   }, []);
 
-
   // Load the post, but only if the data is ready.
-  return data.isReady ? (        
+  return data.isReady ? (
     <Content>
-      <Html2React html={homepage.content.rendered} />
+      <AnchorProvider>
+          <div className="intro hp-section">
+            <HpIntro content={introSectionContent} />
+          </div>
+          <div className="who-i-am hp-section hp-section-background light">
+              <AnchorSection id="chi-sono" className="anchor" />
+              <div className="hp-background-cube hp-cube-first">
+                  <img src={Square1} alt="square 1" width="600" height="600" className="el-image" loading="eager" />
+              </div>
+              <div className="hp-background-cube hp-cube-second">
+                  <img src={Square2} alt="square 2" width="1100" height="1100" className="el-image" loading="eager" />
+              </div>
+              <div className="hp-background-cube hp-cube-third">
+                  <img src={Square1} alt="square 3" width="600" height="600" className="el-image" loading="eager" />
+              </div>
+              <div className="hp-background-cube hp-cube-fourth">
+                  <img src={Square2} alt="square 4" width="1100" height="1100" className="el-image" loading="eager" />
+              </div>
+            <HpWhoIAm content={whoIAmSectionContent} />
+          </div>
+          <div className="work hp-section">
+              <AnchorSection className="anchor" id="lavoro"/>
+              <HpWork content={workSectionContent} />
+          </div>
+          <div className="blog hp-section hp-section-background light">
+              <div className="hp-background-cube hp-cube-first">
+                  <img src={Square1} alt="square " width="600" height="600" className="el-image" loading="eager" />
+              </div>
+              <div className="hp-background-cube hp-cube-second">
+                  <img src={Square2} alt="square 6" width="1100" height="1100" className="el-image" loading="eager" />
+              </div>
+            <HpBlog content={blogSectionContent} />
+          </div>
+         <div className="contacts hp-section">
+            <AnchorSection id="contatti" className="anchor"/>
+            <HpContacts content={contactsSectionContent} />
+          </div>
+      </AnchorProvider>
     </Content>
   ) : null;
 };
 
 export default connect(HomePage);
 
-const Container = styled.div`
-  
-`;
-
 const Content = styled.div`
-width: 100%;
-position:relative;
-.wp-block-group__inner-container {
-  width: 100%;
-  max-width: 1200px;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin: 0px auto;
-}
-.hero-homepage {
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-bottom:50px;
-  }
-  .wp-block-columns {
-    .wp-block-column {
-      margin-bottom:2rem
-    }
-    align-items: center;
-    .wp-block-button {
-      .wp-block-button__link {
-        background: var(--brand);  
-        border:1px solid transparent;   
-        border-color:var(--brand);  
-        box-shadow:0px 2px 5px 0px rgb(0 0 0 / 0.4); 
-        transition: all 0.3s ease;  
-        margin-right: 0.5rem;  
-        &:hover {
-          color:var(--black);
-          background:transparent;
+    width: 100%;
+    position:relative;
+    .hp-section {
+      position: relative;
+      overflow: hidden;
+      .hp-section-content-title {
+        h3 {
+          color: var(--typography-main);
+          margin-bottom: 50px;
         }
       }
-    }
-    .wp-block-button.is-style-outline {       
-      .wp-block-button__link {
-        background: transparent;
-        border-color:var(--brand);     
-        color:var(--brand);  
-        &:hover {
-          color:var(--black);
-        }
-      }
-    }
-  }
-}
-
-.home-services {
-  background:#F8F8FA;
-  padding-top: 34px;
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-top: 75px;
-    padding-bottom:75px;
-  }
-  .wp-block-group__inner-container {
-    .home-services-heading {
-      max-width:539px;
-      margin:0 auto;
-      margin-bottom:3rem;
-    }
-    .home-services-grid {
-
-      .wp-block-image {
-        width: 62px;
-        height: 62px;
-        margin: 0 auto;
-      }
-      h5 {
-        margin-bottom:1rem;
-        margin-top:1rem;
-      }
-      p {
-        position:relative;
-      }
-    }
-  }
-}
-.home-services-two {
-  padding-top: 34px;
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-top: 75px;
-    padding-bottom:75px;
-  }
-  .wp-block-group__inner-container {
-    .wp-block-columns {
-      .wp-block-column {
-        ol {
-          counter-reset: myOrderedCounter;
-          padding-left:0;
-          margin-top:2rem;
-          li {
-            list-style-type: none;
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 1rem;
-            &:before {
-              counter-increment: myOrderedCounter;
-              content: counter(myOrderedCounter);
-              position: absolute;
-              background-color: var(--brand);
-              border-radius: 50%;
-              left: 0;
-              top: 5px;
-              width: 30px;
-              height: 30px;
-              text-align: center;
-              color: var(--white);
-              padding-top: 2.5px;
+      &.hp-section-background {
+        overflow:hidden;
+        background: var(--light-brand);
+        &.light {
+          background: var(--light-brand);
+          &:before {
+            position: absolute;
+            top: 0px;
+            left: 33%;
+            content: "";
+            display: block;
+            width: 67%;
+            height: 8px;
+            background-color: var(--typography-action);
+            z-index:10;
+          }
+          &:after {
+            position: absolute;
+            bottom: 0px;
+            right: 33%;
+            content: "";
+            display: block;
+            width: 67%;
+            height: 8px;
+            background-color: var(--typography-action)
+          }
+          .hp-section-content-title {
+            h3 {
+              color: var(--brand);
             }
           }
         }
-      }
-    }
-  }
-}
-.home-cta {
-  padding-top: 34px;
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-top: 75px;
-    padding-bottom:75px;
-  }
-  background:var(--brand);
-  color:var(--white);
-  .wp-block-group__inner-container {
-    h2 {
-      color:var(--white);
-    }
-    .wp-block-buttons {
-      .wp-block-button {
-        .wp-block-button__link {
-          background: var(--white);  
-          border:1px solid transparent;   
-          border-color:var(--white);  
-          box-shadow:0px 2px 5px 0px rgb(0 0 0 / 0.4); 
-          transition: all 0.3s ease;  
-          margin-right: 0.5rem;  
-          color:var(--brand);
-          &:hover {
-            color:var(--white);
-            background:transparent;
+        .hp-background-cube {
+          position: absolute;
+          &.hp-cube-first {
+            left: -5vw;
+            top: 5vh;
+            z-index: 0;
+          }
+          &.hp-cube-second {
+            right: 5vw;
+            top: -25vw;
+            z-index: 0;
+          }
+          &.hp-cube-third {
+            right: 5vw;
+            top: 20vh;
+            z-index: 0;
+          }
+          &.hp-cube-fourth {
+            left: -2vw;
+            top: 20vh;
+            z-index: 0;
           }
         }
       }
-      .wp-block-button.is-style-outline {       
-        .wp-block-button__link {
-          background: transparent;
-          border-color:var(--white);     
-          color:var(--white);  
-          &:hover {
-            background:var(--white);
-            color:var(--brand);
+      .hp-section-content {
+          margin-top: 80px;
+          margin-bottom: 80px;
+          padding: 2rem;
+          max-width: 1280px;
+          position:relative;
+          margin-left: auto;
+          margin-right: auto
+      }
+      .hp-section-content-title {
+        position:relative;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        .position-left {
+          position: relative;
+          margin-right: auto;
+          display: block;
+          width: fit-content;
+          &:after {
+            @media (min-width: 767px) {
+              position: absolute;
+              width: 30vw;
+              bottom: -10px;
+              left: calc(100% + 5px - 30vw);
+            }
+            margin-top: -50px;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 4px;
+            background-color: var(--typography-action)
+          }
+        }
+        .position-right {
+          position: relative;
+          margin-left: auto;
+          display: block;
+          width: fit-content;
+          &:after {
+            @media (min-width: 767px) {
+              position: absolute;
+              width: 30vw;
+              bottom: -10px;
+              right: calc(100% + 5px - 30vw);
+            }
+            margin-top: -50px;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 4px;
+            background-color: var(--typography-action)
           }
         }
       }
     }
-  }
-}
-.home-team {
-  padding-top: 34px;
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-top: 75px;
-    padding-bottom:75px;
-  }
-  .home-team-heading {
-    .wp-block-group__inner-container {
-      max-width:539px;
-      margin:0 auto;
-      margin-bottom:3rem;
-    }
-  }
-  .wp-block-group__inner-container {
-    .wp-block-columns {
-      .wp-block-column {
-        margin-bottom:1.5rem;
-        p {
-          margin-bottom: 0rem;
-        }
-      }
-    }    
-  }
-}
-.home-recent-blog {
-  padding-top: 34px;
-  padding-bottom:34px;
-  @media (min-width: 992px) {
-    padding-top: 75px;
-    padding-bottom:75px;
-  }
-  background:#F8F8FA;
-  .home-recent-blog-heading {
-    margin-bottom:3rem;
-  }
-  .wp-block-latest-posts {
-    li {
-      margin-bottom:2rem;
-      .wp-block-latest-posts__featured-image {
-        margin-bottom:1rem;
-        width: 100%;
-      }
-      a {
-        color:var(--black);
-        transition: all 0.3s ease;  
-        font-weight:500;
-        margin-bottom: 0.5rem;
-        display: block;
-        &:hover {
-          color:var(--brand);
-        }
-      }
-      .wp-block-latest-posts__post-date {
-        color: rgb(69 78 86);
+    .intro {
+      margin-top: -50px;
+      margin-bottom: 50px;
+      @media (min-width: 768px) {
+        margin-top: 150px;
+        margin-bottom: 150px;
       }
     }
-  }
-}
 `;

@@ -3,8 +3,8 @@ const settings = {
   "state": {
     "frontity": {
       "url": "https://test.frontity.org",
-      "title": "Test Frontity Blog",
-      "description": "WordPress installation for Frontity development"
+      "title": "Davide Lunardon",
+      "description": "Sono uno sviluppatore web full stack, da sempre appassionato e affascinato dal mondo dell'informatica. Costantemente alla ricerca di nuove idee e tecnologie per far evolvere il business dei miei clienti."
     }
   },
   "packages": [
@@ -18,34 +18,45 @@ const settings = {
               "/"
             ],
             [
-              "Nature",
-              "/category/nature/"
+              "Chi sono",
+              "/#chi-sono"
             ],
             [
-              "Travel",
-              "/category/travel/"
+              "Blog",
+              "/blog"
             ],
             [
-              "Japan",
-              "/tag/japan/"
+              "Lavoro",
+              "/#lavoro"
             ],
             [
-              "About Us",
-              "/about-us/"
+              "Contatti",
+              "/#contatti"
             ]
           ],
           "featured": {
-            "showOnList": false,
-            "showOnPost": false
+            "showOnList": true,
+            "showOnPost": true
           }
         }
       }
     },
     {
       "name": "@frontity/wp-source",
+      "active": true,
       "state": {
         "source": {
-          "url": "https://test.frontity.org"
+          "url": "https://app.dadolun95.test",
+          "homepage": "homepage",
+          "postsPage": "blog",
+          "postTypes": [
+            {
+              "type": "posts",
+              "params": {
+                "acf_format": "standard"
+              }
+            }
+          ],
         }
       }
     },

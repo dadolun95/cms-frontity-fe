@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
-import Link from "./link";
 import List from "./list";
-import FeaturedMedia from "./featured-media";
+import FeaturedMedia from "./media/featured-media";
+import { Trans } from 'react-i18next';
 
 const Post = ({ state, actions, libraries }) => {
-  // Get information about the current URL.
   const data = state.source.get(state.router.link);
-  // Get the data of the post.
   const post = state.source[data.type][data.id];
-  // Get the data of the author.
-  const author = state.source.author[post.author];
-  // Get a human readable date.
   const date = new Date(post.date);
 
   // Get the html2react component.
@@ -27,37 +22,26 @@ const Post = ({ state, actions, libraries }) => {
     List.preload();
   }, []);
 
-  // Load the post, but only if the data is ready.
   return data.isReady ? (
     <ArticleContainer>
-      <div className="post-title">
-        <Title dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-
-        {/* Only display author and date on posts */}
+      <div className="post-title container">
         {data.isPost && (
-          <div>
-            {author && (
-              <StyledLink link={author.link}>
-                <Author>
-                  By <b>{author.name}</b>
-                </Author>
-              </StyledLink>
-            )}
-            <DateWrapper>
-              {" "}
-              on <b>{date.toDateString()}</b>
-            </DateWrapper>
-          </div>
+          <DateWrapper>
+            {" "}
+            <Trans i18nKey="published on" /> <b>{date.toLocaleDateString(['it'])}</b>
+          </DateWrapper>
         )}
+        <Title dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
       </div>
 
-      {/* Look at the settings to see if we should include the featured image */}
       {state.theme.featured.showOnPost && (
         <FeaturedMedia id={post.featured_media} />
       )}
 
       <Content>
-        <Html2React html={post.content.rendered} />
+          <div className="container post-content">
+              <Html2React html={post.content.rendered} />
+          </div>
       </Content>
     </ArticleContainer>
   ) : null;
@@ -67,33 +51,39 @@ export default connect(Post);
 
 const ArticleContainer = styled.div`
   width:100%;
-  max-width:1035px;
-  margin: 0 auto;
-  padding-right: 15px;
-  padding-left: 15px; 
+  margin: 0;
+  padding: 80px 0px;
+  overflow: hidden;
+  background: var(--white);
+  position: relative;
   .post-title {
-    text-align:center;    
+    position: relative;
+    z-index: 1;
   }
 `;
 
 const Title = styled.h1`
   margin-bottom: 1.2rem;
-`;
-
-const StyledLink = styled(Link)`
-  padding: 15px 0;
-`;
-
-const Author = styled.p`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-  display: inline;
+  color: var(--brand);
+  font-size: 3rem;
+  @media (min-width: 768px) {
+    font-size: 5rem;
+  }
 `;
 
 const DateWrapper = styled.p`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-  display: inline;
+  color: var(--brand);
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
+  float: none;
+  @media (min-width: 768px) {
+    float: right;
+    font-size: 0.9em;
+    margin-bottom: 0px;
+    color: var(--brand);
+  }
 `;
 
 /**
@@ -102,14 +92,12 @@ const DateWrapper = styled.p`
  */
 const Content = styled.div`
   word-break: break-word;
-  * {
-    max-width: 771px;
-    width: 100%;
-    margin:0 auto;
-  }
+  position: relative;
+  z-index: 1;
 
   p {
     margin-bottom:1.5rem;
+    color: var(--typography-bold);
   }
 
   img {
@@ -120,9 +108,6 @@ const Content = styled.div`
 
   figure {
     margin: 24px auto;
-    /* next line overrides an inline style of the figure element. */
-    // width: 100% !important;
-
     figcaption {
       font-size: 0.7em;
     }
@@ -139,6 +124,12 @@ const Content = styled.div`
     border-left: 4px solid rgba(12, 17, 43);
     padding: 4px 16px;
   }
+  
+  .wp-block-code {
+    border-radius: 0px;
+    background: var(--light-brand);
+  }
+  
   .wp-block-embed {
     max-width: 100%;
     position: relative;
@@ -162,7 +153,7 @@ const Content = styled.div`
     }
   }
   a {
-    color: rgb(31, 56, 197);
+    color: var(--brand);
     text-decoration: underline;
   }
 
