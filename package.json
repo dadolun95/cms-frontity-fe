@@ -33,6 +33,7 @@
     "react-html-parser": "^2.0.2",
     "react-i18next": "^12.1.1",
     "react-player": "^2.10.1",
-    "react-typing-effect": "^2.0.5"
+    "react-typing-effect": "^2.0.5",
+    "universal-cookie": "^4.0.4"
   }
 }

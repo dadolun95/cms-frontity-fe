@@ -26,6 +26,12 @@ const Footer = ({ state }) => {
           </div>
           <div className="col-md-6 footer-widget widget-two">
             <ul className="widget-list links">
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Log In')}} link="/login"><Trans i18nKey="Log In" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Log In')}} link="/register"><Trans i18nKey="Register" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Log Out')}} link="/logout"><Trans i18nKey="Log Out" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Log Out')}} link="/account"><Trans i18nKey="Account Dashboard" /></Link></li>
+            </ul>
+            <ul className="widget-list links">
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Who i am')}} link="/#chi-sono/"><Trans i18nKey="Who i am" /></Link></li>
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Work')}} link="/#lavoro"><Trans i18nKey="Work" /></Link></li>
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Blog')}} link="/blog"><Trans i18nKey="Blog" /></Link></li>

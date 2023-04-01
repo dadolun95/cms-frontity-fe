@@ -7,6 +7,10 @@ import List from "./list";
 import Post from "./post";
 import Page from "./pages/page";
 import HomePage from "./pages/homepage";
+import LoginPage from "./account/login";
+import AccountDashboardPage from "./account/dashboard";
+import LogoutPage from "./account/logout";
+import RegistrationPage from "./account/registration";
 import Loading from "./loading";
 import Title from "./title";
 import PageError from "./page-error";
@@ -49,6 +53,10 @@ const Theme = ({ state }) => {
       on the type of URL we are in. */}
       <Main>
         <Switch>
+          <AccountDashboardPage when={data.isAccountDashboard} />
+          <LoginPage when={data.isSignIn} />
+          <LogoutPage when={data.isLogout} />
+          <RegistrationPage when={data.isRegistration} />
           <Loading when={data.isFetching} />
           <HomePage when={data.isHome} />
           <List when={data.isArchive} />
