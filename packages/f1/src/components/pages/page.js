@@ -447,6 +447,7 @@ const Content = styled.div`
   
   /* Contact page */
   .wpcf7-form {
+    padding: 30px;
     .wpcf7-form-control {
       border-radius: 0px;
       outline-color: var(--typography-action) !important;
