@@ -29,7 +29,7 @@ const Footer = ({ state }) => {
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Who i am')}} link="/#chi-sono/"><Trans i18nKey="Who i am" /></Link></li>
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Work')}} link="/#lavoro"><Trans i18nKey="Work" /></Link></li>
               <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Blog')}} link="/blog"><Trans i18nKey="Blog" /></Link></li>
-              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Contacts')}} link="/#contatti"><Trans i18nKey="Contacts" /></Link></li>
+              <li><Link className="widget-list-link" aria-label={(t, { i18n }) => {t('Contacts')}} link="/contatti"><Trans i18nKey="Contacts" /></Link></li>
             </ul>
           </div>
         </div>
