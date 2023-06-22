@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { connect, styled } from "frontity";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import parse from 'html-react-parser';
 import HpSectionTitle from "./section-title";
 
 const HpWork = ({ state, content }) => {
@@ -26,7 +26,7 @@ const HpWork = ({ state, content }) => {
                 <div className="panels">
                     {content['tabs'].map((tab, index)=> (
                         <div key={index} className={`panel ${checkActive(index, "active")}`}>
-                            {ReactHtmlParser(tab['content'])}
+                            {parse(tab['content'])}
                         </div>
                     ))}
                 </div>

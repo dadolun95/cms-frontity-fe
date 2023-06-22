@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import parse from 'html-react-parser';
 import ReactTypingEffect from 'react-typing-effect';
 
 const HpIntro = ({ state, content }) => {
@@ -17,7 +17,7 @@ const HpIntro = ({ state, content }) => {
                             text={[content['name'], "Dadolun"]}
                         />
                     </h1>
-                    {ReactHtmlParser(content['text'])}
+                    {parse(content['text'])}
                     <a className="primary-button" href={content['cta-email']}>{content['cta-text']}</a>
                 </div>
             </div>

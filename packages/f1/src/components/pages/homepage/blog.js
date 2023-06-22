@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import parse from 'html-react-parser';
 import HpSectionTitle from "./section-title";
 
 const HpBlog = ({ state, content }) => {
@@ -13,7 +13,7 @@ const HpBlog = ({ state, content }) => {
     return data.isReady ? (
         <Section className="hp-section-content">
             <HpSectionTitle title={content['title']} className={sectionTitleClasses}/>
-            <div>{ReactHtmlParser(content['text'])}</div>
+            <div>{parse(content['text'])}</div>
         </Section>
     ) : null;
 };
