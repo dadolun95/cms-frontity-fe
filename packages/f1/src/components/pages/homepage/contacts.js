@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import HpSectionTitle from "./section-title";
+import Link from "../../link";
 
 const HpContacts = ({ state, content }) => {
     // Get information about the current URL.
@@ -14,7 +15,7 @@ const HpContacts = ({ state, content }) => {
         <Section className="hp-section-content">
             <HpSectionTitle title={content['title']} className={sectionTitleClasses}/>
             {ReactHtmlParser(content['text'])}
-            <a className="primary-button" href={content['cta-email']}>{content['cta-text']}</a>
+            <Link className="primary-button" link="/contatti/" aria-label={content['cta-text']}>{content['cta-text']}</Link>
         </Section>
     ) : null;
 };

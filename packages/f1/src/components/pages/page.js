@@ -44,7 +44,10 @@ export default connect(Page);
 const ArticleContainer = styled.div`
   width:100%;
   .post-title {
-    text-align:center;    
+    text-align:center;  
+    h1 {
+      color: var(--typography-action);
+    }  
   }
 `;
 
@@ -419,7 +422,7 @@ const Content = styled.div`
           box-shadow:0px 2px 5px 0px rgb(0 0 0 / 0.4); 
           transition: all 0.3s ease;  
           margin-right: 0.5rem;
-          text-decoration:non;  
+          text-decoration: none;  
           &:hover {
             color:var(--black);
             background:transparent;
@@ -440,5 +443,25 @@ const Content = styled.div`
   }
   .home-services-img-left {
     background:#F8F8FA; 
+  }
+  
+  /* Contact page */
+  .wpcf7-form {
+    .wpcf7-form-control {
+      border-radius: 0px;
+      outline-color: var(--typography-action) !important;
+    }
+    .wpcf7-submit {
+      border-radius: 0px;
+      width: fit-content;
+      border-color: var(--typography-action);
+      color: var(--typography-action);
+      text-transform: uppercase;
+      font-weight: bold;
+      &:hover {
+        background-color: var(--typography-action);
+        color: var(--brand);
+      }
+    }
   }
 `;

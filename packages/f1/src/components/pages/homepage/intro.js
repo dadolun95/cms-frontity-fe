@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ReactTypingEffect from 'react-typing-effect';
+import Link from "../../link";
 
 const HpIntro = ({ state, content }) => {
     // Get information about the current URL.
@@ -18,7 +19,7 @@ const HpIntro = ({ state, content }) => {
                         />
                     </h1>
                     {ReactHtmlParser(content['text'])}
-                    <a className="primary-button" href={content['cta-email']}>{content['cta-text']}</a>
+                    <Link className="primary-button" link="/contatti/" aria-label={content['cta-text']}>{content['cta-text']}</Link>
                 </div>
             </div>
         </Section>

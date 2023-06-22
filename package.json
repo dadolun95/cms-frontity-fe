@@ -19,6 +19,7 @@
   },
   "prettier": {},
   "dependencies": {
+    "@aamodtgroup/frontity-contact-form-7": "^1.0.1",
     "@awsmin/f1": "./packages/f1",
     "@frontity/core": "^1.16.0",
     "@frontity/html2react": "^1.7.0",
