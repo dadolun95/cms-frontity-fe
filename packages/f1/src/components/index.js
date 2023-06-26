@@ -19,9 +19,28 @@ import Roboto from './styles/fonts/Roboto/Roboto-Regular.ttf';
  * Theme is the root React component of our theme. The one we will export
  * in roots.
  */
-const Theme = ({ state }) => {
+const Theme = ({ state, actions, libraries }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
+
+  useEffect(() => {
+      let script = document.createElement('script');
+      script.src = "/static/iubenda.js";
+      script.type = "text/javascript";
+      document.head.appendChild(script);
+      script = document.createElement('script');
+      script.src = "//cdn.iubenda.com/cs/gpp/stub.js";
+      script.type = "text/javascript";
+      document.head.appendChild(script);
+      script = document.createElement('script');
+      script.src = "//cdn.iubenda.com/cs/iubenda_cs.js";
+      script.type = "text/javascript";
+      script.async = true;
+      document.head.appendChild(script);
+      return () => {
+          document.head.removeChild(script);
+      }
+  }, []);
 
   return (
     <>
@@ -30,7 +49,6 @@ const Theme = ({ state }) => {
       <Head>
         <meta name="description" content={state.frontity.description} />
         <html lang="it" />
-        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="8177632c-31ad-4e5b-8d72-c5f64a602fca" data-blockingmode="auto" type="text/javascript"></script>
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.
