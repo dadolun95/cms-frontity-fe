@@ -24,19 +24,52 @@ const Theme = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
 
   useEffect(() => {
-      let script = document.createElement('script');
-      script.src = "/static/iubenda.js";
-      script.type = "text/javascript";
-      document.head.appendChild(script);
-      script = document.createElement('script');
-      script.src = "//cdn.iubenda.com/cs/gpp/stub.js";
-      script.type = "text/javascript";
-      document.head.appendChild(script);
-      script = document.createElement('script');
-      script.src = "//cdn.iubenda.com/cs/iubenda_cs.js";
-      script.type = "text/javascript";
-      script.async = true;
-      document.head.appendChild(script);
+
+
+      (events => {
+          const loadMyLibrary = () => {
+              events.forEach(type => window.removeEventListener(type, loadMyLibrary));
+
+              //IUBENDA
+              let script = document.createElement('script');
+              script.src = "/static/iubenda.js";
+              script.type = "text/javascript";
+              document.head.appendChild(script);
+
+              script = document.createElement('script');
+              script.src = "https://cs.iubenda.com/autoblocking/3495541.js";
+              script.type = "text/javascript";
+              document.head.appendChild(script);
+
+              script = document.createElement('script');
+              script.src = "//cdn.iubenda.com/cs/gpp/stub.js";
+              script.type = "text/javascript";
+              document.head.appendChild(script);
+
+              script = document.createElement('script');
+              script.src = "//cdn.iubenda.com/cs/iubenda_cs.js";
+              script.type = "text/javascript";
+              script.async = true;
+              script.charset = "UTF-8";
+              document.head.appendChild(script);
+
+              //GA4
+              script = document.createElement('script');
+              script.src = "/static/ga4.js";
+              script.type = "text/javascript";
+              script.async = true;
+              document.head.appendChild(script);
+
+              script = document.createElement('script');
+              script.src = "https://www.googletagmanager.com/gtag/js?id=G-64V1Z6XT2D";
+              script.type = "text/javascript";
+              script.async = true;
+              document.head.appendChild(script);
+
+          };
+          events.forEach(type => window.addEventListener(type, loadMyLibrary, {once: true, passive: true}))
+      })(['touchstart', 'mouseover', 'wheel', 'scroll', 'keydown']);
+
       return () => {
           document.head.removeChild(script);
       }
