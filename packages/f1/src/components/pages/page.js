@@ -44,7 +44,12 @@ export default connect(Page);
 const ArticleContainer = styled.div`
   width:100%;
   .post-title {
-    text-align:center;  
+    margin-top: 70px;
+    text-align: left;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
     h1 {
       color: var(--typography-action);
     }  
